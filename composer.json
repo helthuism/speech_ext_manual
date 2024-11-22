@@ -1,0 +1,26 @@
+{
+  "name": "vendor/speech_ext_manual",
+  "description": "Eine TYPO3 Extension zur Sprachsteuerung im Backend.",
+  "type": "typo3-cms-extension",
+  "require": {
+    "typo3/cms-core": "^12.4",
+    "typo3/cms-backend": "^12.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vendor\\SpeechExtManual\\": "Classes/"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "speech_ext_manual"
+    }
+  },
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Michael Helthuis",
+      "email": "Grill.Panda@web.de"
+    }
+  ]
+}

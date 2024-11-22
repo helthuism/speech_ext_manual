@@ -1,0 +1,6 @@
+services:
+  Vendor\SpeechExtManual\Backend\EventListener\PageLayoutListener:
+    tags:
+      - name: event.listener
+        identifier: 'speech-ext-manual'
+        event: TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent
