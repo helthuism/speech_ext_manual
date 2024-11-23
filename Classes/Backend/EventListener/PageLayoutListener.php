@@ -20,8 +20,8 @@ class PageLayoutListener
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
         // Button 1 -> "normaler" button
-        $speechButton = $buttonBar->makeLinkButton()
-            ->setHref('#')
+        $speechButton = $buttonBar->makeInputButton()
+            ->setName('speech-action')
             ->setTitle('Speech Input')
             ->setIcon($iconFactory->getIcon('ext-speechinput-action', Icon::SIZE_SMALL))
             ->setShowLabelText(true)
@@ -31,15 +31,15 @@ class PageLayoutListener
         $buttons[ButtonBar::BUTTON_POSITION_LEFT][3][] = $speechButton;
 
         // Button 1 -> toggle button
-        $toggleButton = $buttonBar->makeLinkButton()
-            ->setHref('#')
-            ->setTitle('Toggle State')
+        $toggleButton = $buttonBar->makeInputButton()
+            ->setName('toggle-action')
+            ->setTitle('Toggle Speech Input')
             ->setIcon($iconFactory->getIcon('ext-speechinput-action', Icon::SIZE_SMALL))
             ->setShowLabelText(true)
             ->setClasses('toggle-action');
 
         // Position des buttons
-        $buttons[ButtonBar::BUTTON_POSITION_RIGHT][5][] = $toggleButton;
+        $buttons[ButtonBar::BUTTON_POSITION_RIGHT][3][] = $toggleButton;
 
         // Buttons aktualisieren
         $event->setButtons($buttons);
