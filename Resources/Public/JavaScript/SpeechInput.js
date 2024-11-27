@@ -237,15 +237,21 @@ define(['jquery'], function ($) {
         function setInputToField(field, inputText) {
             if (field.tagName === 'INPUT' || field.tagName === 'TEXTAREA' || field.tagName === 'SELECT') {
                 field.value = inputText;
-                console.log(`Input '${inputText}' set to the selected field.`);
 
-                var event = new Event('change', { bubbles: true });
+                var event = new Event('change', {bubbles: true});
                 field.dispatchEvent(event);
-            }
-            // Für CKEditor
-            else if (field.getAttribute('contenteditable') === "true") {
-                field.innerHTML = `<p>${inputText}</p>`;  // aktuell wird noch alles ersetzt, könnte auch als "edit" abgeändert werden in Zukunft
-                console.log(`Input '${inputText}' set in the CKEditor content area.`);
+            } else if (field.isContentEditable || field.getAttribute('contenteditable') === 'true') { // Für CKEditor
+                // Zugriff auf CKEditor
+                const editorInstance = field.ckeditorInstance;
+
+                if (editorInstance) {
+                    // bestehenden Inhalt holen und neuen hinzufügen
+                    const currentContent = editorInstance.getData();
+                    const newContent = `${currentContent}<p>${inputText}</p>`;
+                    editorInstance.setData(newContent);
+                } else {
+                    console.error("CKEditor instance not found");
+                }
             } else {
                 console.error("Selected field is not valid for input.");
             }
