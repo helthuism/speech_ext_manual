@@ -4,7 +4,7 @@ define(['jquery'], function ($) {
     try {
         // Variablen initialisieren
         var recognizing = false;
-        var infiniteMode = false; // Zustand für den "unendlich"-Modus
+        var infiniteMode = false; // Zustand für den "unendlich" Modus
         var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         var recognition = new SpeechRecognition();
         recognition.continuous = true;
@@ -36,7 +36,7 @@ define(['jquery'], function ($) {
             startSpeechRecognition();
         });
 
-        // Event Listener für den toggle Button
+        // Event Listener für den Toggle Button
         $(document).on('click', '.toggle-action', function (event) {
             event.preventDefault();
             $(this).toggleClass('active');
@@ -55,17 +55,8 @@ define(['jquery'], function ($) {
         recognition.onresult = function (event) {
             var transcript = event.results[event.resultIndex][0].transcript.trim().toLowerCase(); //immer neuestes Ergebnis verwenden
             console.log("Recognized speech:", transcript);
-            //wenn die Eingabe 'eingabe' enthält, so gebe alles darauf folgende in ein Textfeld ein
-            if (transcript.includes('eingabe')) {
-                const inputText = transcript.replace(/.*eingabe\s*/, '').trim();
-                const focusedElement = document.activeElement;
-                if (focusedElement) {
-                    setInputToField(focusedElement, inputText);
-                } else {
-                    console.error("No field selected to input text.");
-                }
-                //wenn die Eingabe 'setze datum' enhält, so verwende alles folgende (bis auf 'auf') als Eingabe
-            } else if (transcript.includes('setze datum')) {
+            //wenn die Eingabe 'setze datum' enhält, so verwende alles folgende (bis auf 'auf') als Eingabe
+            if (transcript.includes('setze datum')) {
                 const dateString = transcript.replace(/.*setze datum( auf)?\s*/, '').trim();
                 setDateInFlatpickr(dateString);
             } else if (transcript.includes('create new content') || transcript.includes('neues inhaltselement')) {
@@ -95,6 +86,14 @@ define(['jquery'], function ($) {
                 openDropdown('header_layout');
             } else if (transcript.includes('select position')) {
                 openDropdown('colPos');
+            } else if (transcript.includes('eingabe') || transcript.includes('gebe ein')) { //wenn die Eingabe 'eingabe' enthält, so gebe alles darauf folgende in ein Textfeld ein
+                const inputText = transcript.replace(/.*(eingabe|gebe ein)\s*/, '').trim();
+                const focusedElement = document.activeElement;
+                if (focusedElement) {
+                    setInputToField(focusedElement, inputText);
+                } else {
+                    console.error("No field selected to input text.");
+                }
             }
         };
 
@@ -296,7 +295,7 @@ define(['jquery'], function ($) {
                     const month = dateParts[2].toLowerCase();
                     const year = dateParts[3];
 
-                    // Konvertiere den Monatsnamen in eine Zahl
+                    // Konvertiere den namen in eine Zahl
                     const monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
                     const monthIndex = monthNames.indexOf(month) + 1;
                     const monthFormatted = ('0' + monthIndex).slice(-2);
